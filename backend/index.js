@@ -72,4 +72,18 @@ app.use((err, req, res, next) => {
 app.use((req, res) => res.status(404).json({ message: `Route ${req.originalUrl} not found` }));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚂 Server running on port ${PORT} [${process.env.NODE_ENV || "development"}]`));
+app.listen(PORT, () => {
+  console.log(`🚂 Server running on port ${PORT} [${process.env.NODE_ENV || "development"}]`);
+
+  // Keep Render free tier awake by self-pinging every 14 minutes
+  if (process.env.NODE_ENV === "production") {
+    const https = require("https");
+    setInterval(() => {
+      https.get("https://railride-backend.onrender.com", (res) => {
+        console.log(`Keep-alive ping: ${res.statusCode}`);
+      }).on("error", (err) => {
+        console.error("Keep-alive error:", err.message);
+      });
+    }, 14 * 60 * 1000); // every 14 minutes
+  }
+});
