@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider, useAuth } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import AIChatbot from './components/AIChatbot'
 import Home from './pages/Home'
@@ -12,6 +12,13 @@ import MyBookings from './pages/MyBookings'
 import PNRStatus from './pages/PNRStatus'
 import AdminPanel from './pages/AdminPanel'
 import AIFeatures from './pages/AIFeatures'
+
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return null // wait for auth to load
+  if (!user) return <Navigate to="/login" replace />
+  return children
+}
 
 export default function App() {
   return (
@@ -27,15 +34,18 @@ export default function App() {
       />
       <Navbar />
       <Routes>
-        <Route path="/"          element={<Home />} />
+        {/* Public routes */}
         <Route path="/login"     element={<Login />} />
         <Route path="/register"  element={<Register />} />
-        <Route path="/search"    element={<SearchResults />} />
-        <Route path="/book/:id"  element={<BookTrain />} />
-        <Route path="/bookings"  element={<MyBookings />} />
-        <Route path="/pnr"       element={<PNRStatus />} />
-        <Route path="/admin"     element={<AdminPanel />} />
-        <Route path="/ai"        element={<AIFeatures />} />
+
+        {/* Protected routes */}
+        <Route path="/"          element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/search"    element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
+        <Route path="/book/:id"  element={<ProtectedRoute><BookTrain /></ProtectedRoute>} />
+        <Route path="/bookings"  element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
+        <Route path="/pnr"       element={<ProtectedRoute><PNRStatus /></ProtectedRoute>} />
+        <Route path="/admin"     element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+        <Route path="/ai"        element={<ProtectedRoute><AIFeatures /></ProtectedRoute>} />
         <Route path="*"          element={<NotFound />} />
       </Routes>
       <AIChatbot />
