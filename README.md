@@ -1,6 +1,6 @@
 # 🚂 RailRide — AI-Powered Railway Booking App
 
-A full-stack MERN application for Indian railway search and ticket booking, with Google Gemini AI integration for natural language trip planning, seat recommendations, and a 24/7 chatbot.
+A full-stack MERN application for Indian railway search and ticket booking, with Groq AI integration for natural language trip planning, seat recommendations, and a 24/7 chatbot.
 
 ---
 
@@ -15,7 +15,7 @@ A full-stack MERN application for Indian railway search and ticket booking, with
 | 💳 **Mock Payment** | UPI / Card / Netbanking / Wallet payment step |
 | ❌ **Cancellation** | Cancel with atomic seat restoration, refund status |
 | 📋 **PNR Status** | Lookup booking details by PNR number |
-| 🗺️ **AI Trip Planner** | Natural language → parsed train search via Gemini |
+| 🗺️ **AI Trip Planner** | Natural language → parsed train search via Groq |
 | 💺 **AI Seat Advisor** | Recommends best class for your journey |
 | 💬 **AI Chatbot** | Floating 24/7 railway assistant on every page |
 | 🛡️ **Admin Panel** | Create/edit/delete trains, stats dashboard, search |
@@ -32,7 +32,7 @@ A full-stack MERN application for Indian railway search and ticket booking, with
 | Database | MongoDB Atlas + Mongoose (with atomic transactions) |
 | Auth | JWT + bcryptjs (httpOnly-ready) |
 | Validation | express-validator on all routes |
-| AI | Google Gemini 2.0 Flash |
+| AI | Groq 3.3 lamma |
 | Deploy | Vercel (frontend) + Render (backend) |
 
 ---
